@@ -1,17 +1,19 @@
 package gr.cup.mathesis.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
 /**
- * 2. Υλοποιήστε αυτή την κλάση 
+ * 2. 
  * 
  * @author mathesis
  */
+//looks like a singleton class
 public final class TaskManager implements TaskManagerInterface {
-
+    List <Task> tasks=new ArrayList();
     private static TaskManager INSTANCE;
 
     private TaskManager() {
