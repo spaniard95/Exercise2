@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 /**
- * 4. Υλοποιήστε τις μεθόδους με σχόλιο TODO αυτής της κλάσης
+ * 4. 
  *
  * @author Mathesis
  */
@@ -164,6 +164,11 @@ public class Main {
      */
     private static void displayTasks(List<Task> tasks) {
         // TODO
+        boolean loop=true;
+        for(int i=0;i<=tasks.size();i++){
+            //sytem.out.println.....
+        }
+        if(loop) System.out.println("NO TASKS");
     }
 
     /**

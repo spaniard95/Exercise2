@@ -2,6 +2,7 @@
 package gr.cup.mathesis.model;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Task {
 private String desc,comments;
@@ -9,6 +10,7 @@ private int prio,daysBefore,id;
 private boolean alert,completed;
 private LocalDate dueDate;
 
+//has id contructor
     public Task(String desc, String comments, int prio, int daysBefore, boolean alert, boolean completed, LocalDate dueDate,int id) {
         this.desc = desc;
         this.comments = comments;
@@ -101,5 +103,26 @@ private LocalDate dueDate;
     public boolean getAlert(){
         return alert;
     }
-    
+    @Override
+    public boolean equals(Object object){
+        if(object==this)return true;
+        if(object==null||object.getClass()==this.getClass())return false;
+        Task task=(Task)object;
+        if(task.toString()==this.toString())return true;
+        else return false;
+    }
+    @Override
+    public int hashCode(){
+        return this.id;
+    }
+    public String toShortString(){
+        return ("Description:"+getDescription()+"\nPriority:"+getPriority()+"\nDueDate:"+getDueDate()+"\nAlert?:"+getAlert()+"\ndaysBefore:"+3+"");
+//todo
+    }
+    public String toString(){
+        return(toShortString()+"\nComments:"+getComments()+"\nCompleted:"+isCompleted());
+    }
+    private String daysBefore(Period period){
+        return ("Months "+period.getMonths()+" days "+period.getDays());
+    }
 }
