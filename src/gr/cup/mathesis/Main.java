@@ -1,6 +1,7 @@
 package gr.cup.mathesis;
 
 import gr.cup.mathesis.model.Task;
+import gr.cup.mathesis.model.TaskManager;
 import gr.cup.mathesis.model.TaskManagerInterface;
 import gr.cup.mathesis.model.db.TaskManagerDB;
 import java.io.FileNotFoundException;
@@ -32,8 +33,8 @@ import java.util.logging.Level;
  */
 public class Main {
 
-//    private static final TaskManagerInterface TASK_MANAGER = TaskManager.getInstance();
-    private static final TaskManagerInterface TASK_MANAGER = TaskManagerDB.getInstance();
+    private static final TaskManagerInterface TASK_MANAGER = TaskManager.getInstance();
+  //  private static final TaskManagerInterface TASK_MANAGER = TaskManagerDB.getInstance();
     private static final String PROMPT = "-> ";
     private static final String TASK_ID_PROMPT = "Task id (or 0 for main menu): ";
     // scanner to allow to press ENTER
@@ -164,11 +165,8 @@ public class Main {
      */
     private static void displayTasks(List<Task> tasks) {
         // TODO
-        boolean loop=true;
-        for(int i=0;i<=tasks.size();i++){
-            //sytem.out.println.....
-        }
-        if(loop) System.out.println("NO TASKS");
+        for(Task task:tasks) System.out.println(""+task);   //overidden toString? or toshortstring
+       
     }
 
     /**

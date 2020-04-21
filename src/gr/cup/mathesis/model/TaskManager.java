@@ -2,18 +2,15 @@ package gr.cup.mathesis.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
-/**
- * 2. 
- * 
- * @author mathesis
- */
 //looks like a singleton class
 public final class TaskManager implements TaskManagerInterface {
     List <Task> tasks=new ArrayList();
+    List <Task> pack;
     private static TaskManager INSTANCE;
 
     private TaskManager() {
@@ -27,27 +24,41 @@ public final class TaskManager implements TaskManagerInterface {
     }
 
     @Override
-    public List<Task> listAllTasks(final boolean priorityOrDate) {
-        // TODO 
+    public List<Task> listAllTasks(final boolean priorityOrDate)//false==Date true==priority
+    {
+        if(priorityOrDate) {
+            Comparator<Task> comp=Comparator.comparing(Task::getPriority);
+            Collections.sort(tasks,comp);
+        }else{
+            Comparator<Task> comp=Comparator.comparing(Task::getDaysUntil);
+            Collections.sort(tasks,comp);
+        }
+        //tasks.sort(tasks,comp);  i dont understand why it doesnt work outside
         return Collections.unmodifiableList(tasks);
     }
 
     @Override
     public List<Task> listTasksWithAlert() {
-        // TODO 
-        return null;
+        pack=new ArrayList();
+        for(Task task:tasks) {
+           if(task.getAlert()) pack.add(task);
+        }
+        return pack;
     }
     
     @Override
     public List<Task> listCompletedTasks() {
-        // TODO 
-        return null;
+        pack=new ArrayList();
+        for(Task task:tasks) {
+           if(task.isCompleted()) pack.add(task);
+        }
+        return pack;
     }
 
     @Override
     public void addTask(final Task task) {
         if (validate(task)) {
-            // TODO
+            tasks.add(task);
         } else {
             Logger.getLogger(TaskManager.class.getName()).log(Level.WARNING, "Task validation failed.");
         }
