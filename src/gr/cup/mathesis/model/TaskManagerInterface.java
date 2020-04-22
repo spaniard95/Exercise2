@@ -17,4 +17,10 @@ public interface TaskManagerInterface {
    List<Task> listAllTasks(boolean priorityOrDate);
    List<Task> listTasksWithAlert();
    List<Task> listCompletedTasks();
+
+    public List<Task> findTaskByDesc(String desc);
+
+   
+
+    
 }

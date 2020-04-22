@@ -177,7 +177,8 @@ public class Main {
      */
     private static List<Task> searchForTasks(String desc) {
         // TODO
-        return null;
+       
+       return TASK_MANAGER.findTaskByDesc(desc);
     }
 
     /**
@@ -318,6 +319,7 @@ public class Main {
      */
     private static void deleteTask(int id) {
         // TODO
+        TASK_MANAGER.removeTask(id);
     }
 
     /**
@@ -328,6 +330,7 @@ public class Main {
      */
     private static void markTaskAsCompleted(int id, boolean completed) {
         // TODO
+        TASK_MANAGER.markAsCompleted(id, completed);
     }
 
     /**
@@ -336,6 +339,7 @@ public class Main {
     private static void displayCompletedTasks() {
         System.out.println("======= Completed Tasks =======");
         // TODO
+        for(Task task:TASK_MANAGER.listCompletedTasks()) System.out.println(task);
     }
 
     /**
@@ -343,6 +347,8 @@ public class Main {
      */
     private static void displayAlerts() {
         // TODO
+        for (Task task:TASK_MANAGER.listTasksWithAlert())
+            if(!task.isCompleted()&&task.isLate())System.out.println("This task is overdue by "+(LocalDate.now().getDayOfYear()-task.getDueDate().getDayOfYear()));
     }
 
     /**

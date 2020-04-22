@@ -57,7 +57,7 @@ private LocalDate dueDate;
         this.prio = prio;
     }
     public int getDaysUntil(){
-        return daysNumBeetweenDates(LocalDate.now(),dueDate);
+        return daysBeetweenDates(LocalDate.now(),dueDate);
     }
 
     public int getDaysBefore() {
@@ -100,8 +100,8 @@ private LocalDate dueDate;
         this.id = id;
     }
     
-    public int isLate(){
-        return 0; //NEEDS WORK DONE 
+    public boolean isLate(){
+        return true; //NEEDS WORK DONE 
     }
     public boolean getAlert(){
         return alert;
@@ -114,7 +114,7 @@ private LocalDate dueDate;
         if(object==this)return true;
         if(object==null||object.getClass()==this.getClass())return false;
         Task task=(Task)object;
-        if(task.toString()==this.toString())return true;
+        if(task.toString().equals(this.toString()))return true;
         else return false;
     }
     @Override
@@ -122,7 +122,7 @@ private LocalDate dueDate;
         return this.id;
     }
     public String toShortString(){
-        String str=("Description: "+getDescription()+"\nPriority: "+getPriority());
+        String str=("ID:"+getId()+"\nDescription: "+getDescription()+"\nPriority: "+getPriority());
         if(dueDate!=null)  str+="\nDueDate: "+getDueDate();
         if (hasAlert()) str+="\nAlert?: "+hasAlert()+"\ndaysBefore: "+LocalDate.now().until(dueDate.minusDays(daysBefore));
         return str;
@@ -130,16 +130,18 @@ private LocalDate dueDate;
     }
     @Override
     public String toString(){
-        return(toShortString()+"comments: "+getComments()+"\nCompleted: "+isCompleted());
+        return(toShortString()+"\ncomments: "+getComments()+"\nCompleted: "+isCompleted());
      
     }
     private String timeBefore(Period period){
         if(period.getMonths()!=0)return ("Months "+period.getMonths()+" days "+period.getDays());
         return ("Days "+period.getDays());
     }
-    private int daysNumBeetweenDates(LocalDate a,LocalDate b){//i will use that method in duedate comparator i think a better way exists
-        int days=a.getDayOfYear()-b.getDayOfYear(); //couldnt find better way or method to count days beetween two LocalDates 
+    public int daysBeetweenDates(LocalDate a,LocalDate b){//i will use that method in duedate comparator i think a better way exists
+        int days=a.getDayOfYear()-b.getDayOfYear();           //couldnt find better way or method to count days beetween two LocalDates 
         if(days<0)return -days;
         else return days;
     }
+
+   
 }
