@@ -33,8 +33,8 @@ public final class TaskManager implements TaskManagerInterface {
            Comparator<Task> comp=Comparator.comparing(Task::getPriority);
            Collections.sort(tasks,comp);
         }else{
-            Comparator<Task> comp=Comparator.comparing(Task::getDaysUntil);
-            Collections.sort(tasks,comp);
+            Comparator<Task> comp1=Comparator.comparing(Task::getDaysUntil);
+            Collections.sort(tasks,comp1);
          }
         //tasks.sort(tasks,comp);  i dont understand why it doesnt work outside
         return Collections.unmodifiableList(tasks);

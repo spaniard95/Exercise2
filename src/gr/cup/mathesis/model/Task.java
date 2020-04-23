@@ -137,10 +137,9 @@ private LocalDate dueDate;
         if(period.getMonths()!=0)return ("Months "+period.getMonths()+" days "+period.getDays());
         return ("Days "+period.getDays());
     }
-    public int daysBeetweenDates(LocalDate a,LocalDate b){//i will use that method in duedate comparator i think a better way exists
+    public int daysBeetweenDates(LocalDate a,LocalDate b){    //i will use that method in duedate comparator i think a better way exists
         int days=a.getDayOfYear()-b.getDayOfYear();           //couldnt find better way or method to count days beetween two LocalDates 
-        if(days<0)return -days;
-        else return days;
+        return Math.abs(days);
     }
 
    
