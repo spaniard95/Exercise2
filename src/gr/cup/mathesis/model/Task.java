@@ -124,7 +124,7 @@ private LocalDate dueDate;
     public String toShortString(){
         String str=("ID:"+getId()+"\nDescription: "+getDescription()+"\nPriority: "+getPriority());
         if(dueDate!=null)  str+="\nDueDate: "+getDueDate();
-        if (hasAlert()) str+="\nAlert?: "+hasAlert()+"\ndaysBefore: "+LocalDate.now().until(dueDate.minusDays(daysBefore));
+        if (hasAlert()) str+="\nAlert?: "+hasAlert()+"\ndaysBefore: "+daysBefore;
         return str;
     
     }
@@ -132,10 +132,6 @@ private LocalDate dueDate;
     public String toString(){
         return(toShortString()+"\ncomments: "+getComments()+"\nCompleted: "+isCompleted());
      
-    }
-    private String timeBefore(Period period){
-        if(period.getMonths()!=0)return ("Months "+period.getMonths()+" days "+period.getDays());
-        return ("Days "+period.getDays());
     }
     public int daysBeetweenDates(LocalDate a,LocalDate b){    //i will use that method in duedate comparator i think a better way exists
         int days=a.getDayOfYear()-b.getDayOfYear();           //couldnt find better way or method to count days beetween two LocalDates 

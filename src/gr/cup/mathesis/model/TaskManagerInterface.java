@@ -18,7 +18,7 @@ public interface TaskManagerInterface {
    List<Task> listTasksWithAlert();
    List<Task> listCompletedTasks();
 
-    public List<Task> findTaskByDesc(String desc);
+    
 
    
 

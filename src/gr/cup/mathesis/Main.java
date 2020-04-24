@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import javax.xml.transform.OutputKeys;
@@ -25,6 +26,9 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Element;
 
 /**
  * 4. 
@@ -177,8 +181,12 @@ public class Main {
      */
     private static List<Task> searchForTasks(String desc) {
         // TODO
-       
-       return TASK_MANAGER.findTaskByDesc(desc);
+     //  return TASK_MANAGER.findTaskByDesc(desc); ηθελα να χρεισιμοποιησω αυτην την μεθοδο αλλα δεν μπορω να την ενταξω στην TaskManagerInterface
+     List <Task> pack=new ArrayList();
+     for(Task task:TASK_MANAGER.listAllTasks(true)) if(task.getDescription().equals(desc))  pack.add(task);
+     return pack;
+     
+     
     }
 
     /**
@@ -348,7 +356,7 @@ public class Main {
     private static void displayAlerts() {
         // TODO
         for (Task task:TASK_MANAGER.listTasksWithAlert())
-            if(!task.isCompleted()&&task.isLate())System.out.println("This task is overdue by "+(LocalDate.now().getDayOfYear()-task.getDueDate().getDayOfYear()));
+            if(!task.isCompleted()&&task.isLate())System.out.println("This task is overdue by "+(-LocalDate.now().getDayOfYear()-task.getDueDate().getDayOfYear())+" days:\n "+task.getDescription());
     }
 
     /**
@@ -371,6 +379,42 @@ public class Main {
      */
     private static void exportAsXml(String filePath, boolean byPriority) {
         // TODO
+        try{
+         DocumentBuilderFactory dbFactory =DocumentBuilderFactory.newInstance();
+         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+         Document doc = dBuilder.newDocument();
+         
+         Element rootElement = doc.createElement("Tasks");
+         doc.appendChild(rootElement);
+         for(Task task:TASK_MANAGER.listAllTasks(byPriority)){
+         Element taskElement=doc.createElement("Task");
+         rootElement.appendChild(taskElement);
+         createElementWithAC(doc,taskElement,"id",""+task.getId());
+         createElementWithAC(doc,taskElement,"description",task.getDescription());
+         createElementWithAC(doc,taskElement,"priority",""+task.getPriority());
+         createElementWithAC(doc,taskElement,"dueDate",""+task.getDueDate());
+         if(task.hasAlert()){
+             createElementWithAC(doc,taskElement,"alert","yes");
+             createElementWithAC(doc,taskElement,"daysBefore",""+task.getDaysBefore());
+         }else{
+             createElementWithAC(doc,taskElement,"alert","no");
+             createElementWithAC(doc,taskElement,"daysBefore","");
+         }
+         createElementWithAC(doc,taskElement,"comments",task.getComments());
+         
+         }
+         writeToFile(doc,filePath);
+         
+          
+          
+       }catch(Exception e){
+     e.printStackTrace();
+    }
+    }
+    private static void createElementWithAC(Document doc,Element apend,String str1,String str2){
+        Element element =doc.createElement(str1);
+        element.appendChild(doc.createTextNode(str2));
+        apend.appendChild(element);
     }
 
     /**
